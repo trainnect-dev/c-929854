@@ -161,8 +161,22 @@ const Index = () => {
         
         <div className="flex h-full flex-col justify-between pt-[60px] pb-4">
           <MessageList messages={messages} />
-          <div className="w-full max-w-3xl mx-auto px-4 py-2">
+          <div className="w-full max-w-3xl mx-auto px-4">
             <ChatInput onSend={handleSendMessage} isLoading={isLoading} />
+            <div className="flex gap-2 justify-center mt-4">
+              <button 
+                className="relative flex h-[42px] items-center gap-1.5 rounded-full border border-[#383737] px-3 py-2 text-start text-[13px] shadow-xxs transition enabled:hover:bg-token-main-surface-secondary disabled:cursor-not-allowed"
+                onClick={() => handleSendMessage("New Full Course")}
+              >
+                New Full Course
+              </button>
+              <button 
+                className="relative flex h-[42px] items-center gap-1.5 rounded-full border border-[#383737] px-3 py-2 text-start text-[13px] shadow-xxs transition enabled:hover:bg-token-main-surface-secondary disabled:cursor-not-allowed"
+                onClick={() => handleSendMessage("Updating an existing course")}
+              >
+                Update Existing Course
+              </button>
+            </div>
           </div>
           <div className="text-xs text-center text-gray-500 py-2">
             ChatGPT can make mistakes. Check important info.
