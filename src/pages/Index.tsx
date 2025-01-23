@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Sidebar from '@/components/Sidebar';
 import ChatHeader from '@/components/ChatHeader';
@@ -16,6 +16,8 @@ const INITIAL_MESSAGE: Message = {
   content: "Hello, I'm here to help you create or update technical course materials. Let's get started! Are you creating a New Outline, a New Full Course, or are you updating an existing course?"
 };
 
+const STORAGE_KEY = 'chat_history';
+
 const Index = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
@@ -23,6 +25,19 @@ const Index = () => {
   const [courseState, setCourseState] = useState<CourseState>({});
   const [apiKey, setApiKey] = useState<string>('');
   const { toast } = useToast();
+
+  // Load chat history from localStorage on component mount
+  useEffect(() => {
+    const savedMessages = localStorage.getItem(STORAGE_KEY);
+    if (savedMessages) {
+      setMessages(JSON.parse(savedMessages));
+    }
+  }, []);
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  }, [messages]);
 
   const handleApiKeyChange = (newApiKey: string) => {
     setApiKey(newApiKey);
@@ -148,12 +163,23 @@ const Index = () => {
     }
   };
 
+  const clearChatHistory = () => {
+    setMessages([INITIAL_MESSAGE]);
+    localStorage.removeItem(STORAGE_KEY);
+    toast({
+      title: "Chat History Cleared",
+      description: "Your chat history has been cleared successfully.",
+    });
+  };
+
   return (
     <div className="flex h-screen">
       <Sidebar 
         isOpen={isSidebarOpen} 
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
         onApiKeyChange={handleApiKeyChange}
+        messages={messages}
+        onClearHistory={clearChatHistory}
       />
       
       <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
