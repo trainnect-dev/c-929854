@@ -16,20 +16,13 @@ const Sidebar = ({ isOpen, onToggle, onApiKeyChange }: SidebarProps) => {
     { 
       title: "Previous 7 Days", 
       items: [
-        "Likeable and Inception Levels",
-        "Viral Figma Board Ideas",
-        "RAG Status in Software Dev",
-        "Image Input ChatGPT API"
+        "Likeable and Inception Levels"
       ] 
     },
     {
       title: "Previous 30 Days",
       items: [
-        "Focus on Lovable Viral",
-        "Create Twitter Clone",
-        "Reddit Posting Guidelines",
-        "Revamping Social Features",
-        "US AI Voting Logo"
+        "Focus on Lovable Viral"
       ]
     }
   ];
@@ -80,13 +73,13 @@ const Sidebar = ({ isOpen, onToggle, onApiKeyChange }: SidebarProps) => {
                 <div className="h-6 w-6 flex items-center justify-center">
                   <Globe className="h-4 w-4" />
                 </div>
-                <span className="text-sm">ChatGPT</span>
+                <span className="text-sm">ClaudeGPT</span>
               </div>
               <div className="group flex h-10 items-center gap-2.5 rounded-lg px-2 hover:bg-token-sidebar-surface-secondary cursor-pointer">
                 <div className="h-6 w-6 flex items-center justify-center">
                   <Globe className="h-4 w-4" />
                 </div>
-                <span className="text-sm">Explore GPTs</span>
+                <span className="text-sm">Your courses</span>
               </div>
             </div>
 
