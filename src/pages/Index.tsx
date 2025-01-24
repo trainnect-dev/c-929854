@@ -5,6 +5,7 @@ import ChatHeader from '@/components/ChatHeader';
 import ChatInput from '@/components/ChatInput';
 import MessageList from '@/components/MessageList';
 import { CourseState, CourseType } from '@/types/courseCreation';
+import { initializeDatabase } from '@/lib/database';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -26,7 +27,6 @@ const Index = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const { toast } = useToast();
 
-  // Load chat history from localStorage on component mount
   useEffect(() => {
     const savedMessages = localStorage.getItem(STORAGE_KEY);
     if (savedMessages) {
@@ -41,6 +41,14 @@ const Index = () => {
 
   const handleApiKeyChange = (newApiKey: string) => {
     setApiKey(newApiKey);
+  };
+
+  const handleNewFullCourse = () => {
+    handleSendMessage("New Full Course");
+  };
+
+  const handleUpdateExistingCourse = () => {
+    handleSendMessage("Updating an existing course");
   };
 
   const handleCourseTypeResponse = (message: string) => {
@@ -192,20 +200,20 @@ const Index = () => {
             <div className="flex gap-2 justify-center mt-4">
               <button 
                 className="relative flex h-[42px] items-center gap-1.5 rounded-full border border-[#383737] px-3 py-2 text-start text-[13px] shadow-xxs transition enabled:hover:bg-token-main-surface-secondary disabled:cursor-not-allowed"
-                onClick={() => handleSendMessage("New Full Course")}
+                onClick={handleNewFullCourse}
               >
                 New Full Course
               </button>
               <button 
                 className="relative flex h-[42px] items-center gap-1.5 rounded-full border border-[#383737] px-3 py-2 text-start text-[13px] shadow-xxs transition enabled:hover:bg-token-main-surface-secondary disabled:cursor-not-allowed"
-                onClick={() => handleSendMessage("Updating an existing course")}
+                onClick={handleUpdateExistingCourse}
               >
                 Update Existing Course
               </button>
             </div>
           </div>
           <div className="text-xs text-center text-gray-500 py-2">
-            ChatGPT can make mistakes. Check important info.
+            ClaudeGPT can make mistakes. Check important info.
           </div>
         </div>
       </main>
