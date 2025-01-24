@@ -16,7 +16,10 @@ export const CourseResponseHandler = ({ message, courseState, setCourseState }: 
       - Updating an existing course`;
     }
 
-    setCourseState(prev => ({ ...prev, courseType }));
+    setCourseState({
+      ...courseState,
+      courseType
+    });
     
     if (courseType === 'Updating an existing course') {
       return "Please navigate to the 'course_output' folder to select and update your existing course.";
@@ -26,12 +29,18 @@ export const CourseResponseHandler = ({ message, courseState, setCourseState }: 
   };
 
   const handleCourseTopicResponse = (message: string) => {
-    setCourseState(prev => ({ ...prev, courseTopic: message }));
+    setCourseState({
+      ...courseState,
+      courseTopic: message
+    });
     return `What is the target audience for this ${courseState.courseType}?`;
   };
 
   const handleCourseLevelResponse = (message: string) => {
-    setCourseState(prev => ({ ...prev, courseLevel: message }));
+    setCourseState({
+      ...courseState,
+      courseLevel: message
+    });
     return `Great! I'll now start creating your ${courseState.courseType} about "${courseState.courseTopic}" for ${message} audience. Please confirm if you'd like to proceed.`;
   };
 
