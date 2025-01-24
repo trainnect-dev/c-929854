@@ -12,6 +12,7 @@ const Index = () => {
 
   const handleApiKeyChange = (newApiKey: string) => {
     setApiKey(newApiKey);
+    localStorage.setItem('anthropic_api_key', newApiKey);
   };
 
   const clearChatHistory = () => {
@@ -37,7 +38,7 @@ const Index = () => {
       />
       
       <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? 'ml-64' : 'ml-0'}`}>
-        <ChatHeader isSidebarOpen={isSidebarOpen} />
+        <ChatHeader onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)} isSidebarOpen={isSidebarOpen} />
         <ChatContainer />
       </main>
     </div>

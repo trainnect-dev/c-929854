@@ -10,7 +10,11 @@ export const useChatMessages = (apiKey: string) => {
   const { toast } = useToast();
 
   const sendMessageToAnthropic = async (messages: Message[]) => {
-    if (!apiKey) {
+    // First check localStorage for API key
+    const storedApiKey = localStorage.getItem('anthropic_api_key');
+    const effectiveApiKey = apiKey || storedApiKey;
+
+    if (!effectiveApiKey) {
       toast({
         title: "API Key Required",
         description: "Please enter your Anthropic API key in the sidebar",
@@ -24,7 +28,7 @@ export const useChatMessages = (apiKey: string) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': apiKey,
+          'x-api-key': effectiveApiKey,
           'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
