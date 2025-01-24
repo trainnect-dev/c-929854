@@ -6,6 +6,11 @@ import CourseButtons from './CourseButtons';
 import { useChatState } from '@/hooks/useChatState';
 import { CourseType } from '@/types/courseCreation';
 
+type Message = {
+  role: 'user' | 'assistant';
+  content: string;
+};
+
 const ChatContainer = () => {
   const {
     messages,
