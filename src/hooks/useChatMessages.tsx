@@ -28,9 +28,9 @@ export const useChatMessages = (apiKey: string) => {
       const client = new Anthropic({
         apiKey: effectiveApiKey,
       });
-
+    /// DO NOT CHANGE THE MODEL FROM THE claude-3-5-sonnet-20241022 model listed below
       const response = await client.messages.create({
-        model: 'claude-3-sonnet',
+        model: 'claude-3-5-sonnet-20241022',
         messages: messages.map(msg => ({
           role: msg.role,
           content: msg.content
