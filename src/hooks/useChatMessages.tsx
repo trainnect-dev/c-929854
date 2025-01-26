@@ -24,24 +24,29 @@ export const useChatMessages = (apiKey: string) => {
     }
 
     try {
-      const response = await fetch('https://id-preview--d7723df7-8fdf-4999-9b9a-b505dd02eddc.functions.supabase.co/chat', {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-api-key': effectiveApiKey,
+          'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          messages,
-          apiKey: effectiveApiKey
+          model: 'claude-3-sonnet-20240229',
+          messages: messages.map(msg => ({
+            role: msg.role,
+            content: msg.content
+          })),
+          max_tokens: 1024,
         }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to get response from Claude');
+        throw new Error('Failed to get response from Claude');
       }
 
       const data = await response.json();
-      return data.content;
+      return data.content[0].text;
     } catch (error) {
       toast({
         title: "Error",
