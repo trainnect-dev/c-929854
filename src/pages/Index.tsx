@@ -21,11 +21,12 @@ const Index = () => {
       content: "Hello, I'm here to help you create or update technical course materials. Let's get started! Are you creating a New Outline, a New Full Course, or are you updating an existing course?"
     }]);
     localStorage.removeItem('chat_history');
+    localStorage.removeItem('course_state');
     toast({
       title: "Chat History Cleared",
       description: "Started a new chat session",
     });
-    setIsSidebarOpen(false); // Close sidebar after starting new chat
+    setIsSidebarOpen(false);
   };
 
   return (

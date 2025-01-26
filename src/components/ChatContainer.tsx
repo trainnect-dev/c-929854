@@ -82,6 +82,7 @@ const ChatContainer = () => {
   const clearHistory = () => {
     setMessages([INITIAL_MESSAGE]);
     setCourseState({});
+    localStorage.removeItem(STORAGE_KEY);
     toast({
       title: "Chat Cleared",
       description: "Started a new chat session",
