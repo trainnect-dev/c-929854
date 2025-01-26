@@ -29,7 +29,7 @@ export const useChatMessages = (apiKey: string) => {
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': effectiveApiKey,
-          'anthropic-version': '2024-10-22'
+          'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
           model: 'claude-3-5-sonnet-20241022',
