@@ -23,8 +23,9 @@ const Index = () => {
     localStorage.removeItem('chat_history');
     toast({
       title: "Chat History Cleared",
-      description: "Your chat history has been cleared successfully.",
+      description: "Started a new chat session",
     });
+    setIsSidebarOpen(false); // Close sidebar after starting new chat
   };
 
   return (

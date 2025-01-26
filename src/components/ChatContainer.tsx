@@ -11,6 +11,11 @@ type Message = {
   content: string;
 };
 
+const INITIAL_MESSAGE: Message = {
+  role: 'assistant',
+  content: "Hello, I'm here to help you create or update technical course materials. Let's get started! Are you creating a New Outline, a New Full Course, or are you updating an existing course?"
+};
+
 const ChatContainer = () => {
   const {
     messages,
@@ -72,6 +77,15 @@ const ChatContainer = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const clearHistory = () => {
+    setMessages([INITIAL_MESSAGE]);
+    setCourseState({});
+    toast({
+      title: "Chat Cleared",
+      description: "Started a new chat session",
+    });
   };
 
   return (
