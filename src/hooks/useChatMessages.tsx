@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import { anthropic } from '@ai-sdk/anthropic';
+import { Anthropic } from '@anthropic-ai/sdk';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -25,10 +25,12 @@ export const useChatMessages = (apiKey: string) => {
     }
 
     try {
-      const client = anthropic(effectiveApiKey);
+      const client = new Anthropic({
+        apiKey: effectiveApiKey,
+      });
 
       const response = await client.messages.create({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-3-sonnet',
         messages: messages.map(msg => ({
           role: msg.role,
           content: msg.content
