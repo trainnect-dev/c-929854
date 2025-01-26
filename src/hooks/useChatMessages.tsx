@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import Anthropic from '@ai-sdk/anthropic';
+import { Anthropic } from '@ai-sdk/anthropic';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -25,7 +25,7 @@ export const useChatMessages = (apiKey: string) => {
     }
 
     try {
-      const anthropic = new Anthropic({
+      const anthropic = Anthropic({
         apiKey: effectiveApiKey,
       });
 
