@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import Anthropic from '@ai-sdk/anthropic';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -24,29 +25,20 @@ export const useChatMessages = (apiKey: string) => {
     }
 
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': effectiveApiKey,
-          'anthropic-version': '2023-06-01'
-        },
-        body: JSON.stringify({
-          model: 'claude-3-5-sonnet-20241022',
-          messages: messages.map(msg => ({
-            role: msg.role,
-            content: msg.content
-          })),
-          max_tokens: 2500,
-        }),
+      const anthropic = new Anthropic({
+        apiKey: effectiveApiKey,
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to get response from Claude');
-      }
+      const response = await anthropic.messages.create({
+        model: 'claude-3-5-sonnet-20241022',
+        messages: messages.map(msg => ({
+          role: msg.role,
+          content: msg.content
+        })),
+        max_tokens: 2500,
+      });
 
-      const data = await response.json();
-      return data.content[0].text;
+      return response.content[0].text;
     } catch (error) {
       toast({
         title: "Error",
