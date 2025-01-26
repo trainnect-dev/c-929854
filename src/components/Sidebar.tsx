@@ -1,4 +1,4 @@
-import { Settings, X } from 'lucide-react';
+import { Settings, X, MessageSquarePlus } from 'lucide-react';
 import { Button } from './ui/button';
 
 type Message = {
@@ -21,51 +21,58 @@ const Sidebar = ({ isOpen, onToggle, onApiKeyChange, messages, onClearHistory }:
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
-      <div className="flex justify-between items-center p-4 border-b border-gray-600">
-        <h2 className="text-lg font-semibold">Settings</h2>
-        <button onClick={onToggle} className="p-1 hover:bg-gray-700 rounded">
-          <X className="h-5 w-5" />
-        </button>
-      </div>
-
-      <div className="p-4">
-        <div className="mb-6">
-          <label className="block text-sm font-medium mb-2">API Key</label>
-          <input
-            type="password"
-            onChange={(e) => onApiKeyChange(e.target.value)}
-            placeholder="Enter your API key"
-            className="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 focus:outline-none focus:border-gray-400"
-          />
-        </div>
-
-        <div className="mb-6">
-          <h3 className="text-sm font-medium mb-2">Chat History</h3>
-          <div className="space-y-2 max-h-[400px] overflow-y-auto">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`text-sm p-2 rounded ${
-                  message.role === 'user' ? 'bg-gray-700' : 'bg-gray-800'
-                }`}
-              >
-                <div className="font-medium mb-1">
-                  {message.role === 'user' ? 'You' : 'Assistant'}
-                </div>
-                <div className="text-gray-300 line-clamp-2">{message.content}</div>
-              </div>
-            ))}
+      <div className="flex flex-col h-full">
+        <div className="p-4 border-b border-gray-600">
+          <div className="flex justify-between items-center mb-4">
+            <Button 
+              variant="outline" 
+              className="w-full text-white hover:bg-gray-700 border-gray-600"
+              onClick={onClearHistory}
+            >
+              <MessageSquarePlus className="mr-2 h-4 w-4" />
+              New chat
+            </Button>
           </div>
-          <Button
-            variant="destructive"
-            className="w-full mt-4"
-            onClick={onClearHistory}
-          >
-            Clear History
-          </Button>
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold">Settings</h2>
+            <button onClick={onToggle} className="p-1 hover:bg-gray-700 rounded">
+              <X className="h-5 w-5" />
+            </button>
+          </div>
         </div>
 
-        <div className="mt-auto">
+        <div className="p-4 flex-1 overflow-auto">
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-2">API Key</label>
+            <input
+              type="password"
+              onChange={(e) => onApiKeyChange(e.target.value)}
+              placeholder="Enter your API key"
+              className="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 focus:outline-none focus:border-gray-400"
+            />
+          </div>
+
+          <div className="mb-6">
+            <h3 className="text-sm font-medium mb-2">Chat History</h3>
+            <div className="space-y-2 max-h-[400px] overflow-y-auto">
+              {messages.map((message, index) => (
+                <div
+                  key={index}
+                  className={`text-sm p-2 rounded ${
+                    message.role === 'user' ? 'bg-gray-700' : 'bg-gray-800'
+                  }`}
+                >
+                  <div className="font-medium mb-1">
+                    {message.role === 'user' ? 'You' : 'Assistant'}
+                  </div>
+                  <div className="text-gray-300 line-clamp-2">{message.content}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 border-t border-gray-600">
           <Button variant="outline" className="w-full" onClick={onToggle}>
             <Settings className="mr-2 h-4 w-4" />
             Close Settings
