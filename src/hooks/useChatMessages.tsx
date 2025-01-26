@@ -37,7 +37,7 @@ export const useChatMessages = (apiKey: string) => {
             role: msg.role,
             content: msg.content
           })),
-          max_tokens: 8192,
+          max_tokens: 2500,
         }),
       });
 
