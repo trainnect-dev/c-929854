@@ -1,5 +1,6 @@
 import { Settings, X, MessageSquarePlus } from 'lucide-react';
 import { Button } from './ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -15,6 +16,22 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onToggle, onApiKeyChange, messages, onClearHistory }: SidebarProps) => {
+  const { toast } = useToast();
+
+  const handleApiKeyChange = (apiKey: string) => {
+    if (apiKey.trim()) {
+      onApiKeyChange(apiKey);
+      localStorage.setItem('anthropic_api_key', apiKey);
+      toast({
+        title: "API Key Saved",
+        description: "Your API key has been saved successfully",
+      });
+    }
+  };
+
+  // Get the stored API key to show in input if it exists
+  const storedApiKey = localStorage.getItem('anthropic_api_key') || '';
+
   return (
     <div
       className={`fixed left-0 top-0 h-full w-64 bg-[#202123] transform transition-transform duration-300 ease-in-out ${
@@ -46,10 +63,14 @@ const Sidebar = ({ isOpen, onToggle, onApiKeyChange, messages, onClearHistory }:
             <label className="block text-sm font-medium mb-2">API Key</label>
             <input
               type="password"
-              onChange={(e) => onApiKeyChange(e.target.value)}
+              onChange={(e) => handleApiKeyChange(e.target.value)}
               placeholder="Enter your API key"
+              defaultValue={storedApiKey}
               className="w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 focus:outline-none focus:border-gray-400"
             />
+            {storedApiKey && (
+              <p className="text-xs text-green-500 mt-1">API key is set</p>
+            )}
           </div>
 
           <div className="mb-6">
